@@ -28,8 +28,7 @@ def rewrite(url):
 
 def discordredir(url, img):
   if (request.headers.get('User-Agent') != None
-      and request.headers.get('User-Agent').find("Gecko/20100101 Firefox/92.0")
-      == -1 and request.headers.get('User-Agent').find("Discord") == -1):
+      and request.headers.get('User-Agent').find("Discord") == -1):
     return redirect(url)
   else:
     return rewrite(img)

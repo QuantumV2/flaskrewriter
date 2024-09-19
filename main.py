@@ -28,7 +28,7 @@ def rewrite(url):
 
 def discordredir(url, img):
   if (request.headers.get('User-Agent') != None
-      and request.headers.get('User-Agent').find("Discord") == -1):
+      and request.headers.get('User-Agent').find("Discord") == -1 and request.headers.get('User-Agent').find("Mozilla/5.0 (Macintosh; Intel Mac OS X 11.6; rv:92.0) Gecko/20100101 Firefox/92.0") == -1):
     return redirect(url)
   else:
     return rewrite(img)
@@ -81,7 +81,7 @@ def test():
 @app.route("/scott")
 def gameblowsagain():
   user_agent = request.headers.get('User-Agent')
-  if user_agent and ("Discord" not in user_agent):
+  if user_agent and ("Discord" not in user_agent and "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.6; rv:92.0) Gecko/20100101 Firefox/92.0" not in user_agent):
     lines = numpy.loadtxt("scottwoz.txt",
                           dtype=str,
                           comments="#",
@@ -163,7 +163,7 @@ def tomfoolery1():
 @app.route("/agoofymovie002")
 def tomfoolery2():
   if (request.headers.get('User-Agent') != None
-      and request.headers.get('User-Agent').find("Discord") == -1):
+      and request.headers.get('User-Agent').find("Discord") == -1 and request.headers.get('User-Agent').find("Mozilla/5.0 (Macintosh; Intel Mac OS X 11.6; rv:92.0) Gecko/20100101 Firefox/92.0") == -1):
     return "nuh uh, you trynna mess up the order or smth?"
   else:
     global counter

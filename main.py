@@ -117,29 +117,28 @@ def tomfoolery():
   return rewrite(randomchoice)
 
 
-@app.route("/theepicimagesgame1")
+@app.route("/theepicimagesgame")
 def tomfooleryagain():
-  im1 = Image.open('troll/gametemplate.png')
-  response = requests.get('https://source.unsplash.com/random?')
-  file = open('troll/unsplash/image.jpg', 'wb')
-  file.write(response.content)
-  im2 = Image.open(r"troll/unsplash/image.jpg")
-  im1 = im1.convert('RGB')
-  im2 = im2.resize((800, 600))
-  im1.paste(im2, (0, 140))
+    im1 = Image.open('troll/gametemplate.png')
+    response = requests.get('https://loremflickr.com/800/600/hi')
+    
+    with open('troll/unsplash/image.jpg', 'wb') as file:
+        file.write(response.content)
+    
+    im2 = Image.open('troll/unsplash/image.jpg')
+    im1 = im1.convert('RGB')
+    im2 = im2.resize((800, 600))
+    im1.paste(im2, (0, 140))
 
-  @after_this_request
-  def add_header(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    #response.headers['Cache-Control'] = 'no-cache, no-store, public, max-age=0'
-    #response.headers["Pragma"] = "no-cache"
-    #response.headers['Expires'] = '0'
-    return response
+    @after_this_request
+    def add_header(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
 
-  im1.save("troll/unsplash/gameresult1.png", quality=95)
-  return rewrite("/static/troll/unsplash/gameresult1.png")
+    im1.save("troll/unsplash/gameresult1.png", quality=95)
+    return rewrite("/static/troll/unsplash/gameresult1.png")
 
 
 @app.route("/agoofymovie")
@@ -184,60 +183,6 @@ def tomfoolery2():
     return rewrite(moviebefore)
 
 
-@app.route('/duckify', methods=['GET', 'POST'], defaults={'path': ''})
-@app.route('/duckify/<path:path>', methods=['GET', 'POST'])
-def catch_duck(path):
-
-  @after_this_request
-  def add_header(response):
-    response.headers[
-      "Cache-Control"] = "private, no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    #response.headers['Cache-Control'] = 'no-cache, no-store, public, max-age=0'
-    #response.headers["Pragma"] = "no-cache"
-    #response.headers['Expires'] = '0'
-    return response
-
-  img = Image.new('RGB', (256, 256), color='white')
-  d = ImageDraw.Draw(img)
-  font = ImageFont.truetype("HelveticaNowDisplay-Black.ttf",
-                            size=(35 / (len(path) / 6)))
-  d.text((10, 95), path + " has been\nduckified", fill=(0, 0, 0), font=font)
-  img.save('duckifier/ducked.png')
-  return rewrite("/static/duckifier/ducked.png")
-
-
-@app.route('/tti', methods=['GET', 'POST'], defaults={'path': ''})
-@app.route('/tti/<path:path>', methods=['GET', 'POST'])
-def catch_text(path):
-
-  @after_this_request
-  def add_header(response):
-    response.headers[
-      "Cache-Control"] = "private, no-cache, no-store, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
-    #response.headers['Cache-Control'] = 'no-cache, no-store, public, max-age=0'
-    #response.headers["Pragma"] = "no-cache"
-    #response.headers['Expires'] = '0'
-    return response
-
-  if ("thatonepizzatowerfan" not in path):
-    img = Image.new('RGB', (256, 256), color='white')
-  else:
-    img = Image.new('RGB', (256, 256), color='red')
-  if ("QuantumV" in path):
-    img = Image.new('RGB', (256, 256), color='black')
-  d = ImageDraw.Draw(img)
-  font = ImageFont.truetype("HelveticaNowDisplay-Black.ttf",
-                            size=(35 / (len(path) / 10)))
-  if ("QuantumV" not in path):
-    d.text((10, 95), path, fill=(0, 0, 0), font=font)
-  else:
-    d.text((10, 95), path, fill=(255, 255, 255), font=font)
-  img.save('duckifier/normal/texted.png')
-  return rewrite("/static/duckifier/normal/texted.png")
 
 
 @app.route('/')
